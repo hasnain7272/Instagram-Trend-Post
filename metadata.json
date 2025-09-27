@@ -1,0 +1,5 @@
+{
+  "name": "InstaTrend Post Generator",
+  "description": "A pragmatic tool to generate ready-to-publish Instagram posts. Enter a city to get AI-powered trend inspiration, then select a trend to instantly create a unique post with a new image, caption, and hashtags.",
+  "requestFramePermissions": []
+}

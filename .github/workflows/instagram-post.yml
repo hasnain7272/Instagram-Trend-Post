@@ -1,0 +1,39 @@
+
+name: Generate and Post to Instagram
+
+on:
+  workflow_dispatch:
+    inputs:
+      location:
+        description: 'City to find trends from'
+        required: true
+        default: 'Paris'
+  schedule:
+    - cron: '0 8 * * *' # Runs every day at 8:00 AM UTC
+
+jobs:
+  build-and-post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        # We only need the dependencies for the script, not the full app
+        run: npm install --prefix ./scripts
+
+      - name: Run Post Generator
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+          INSTAGRAM_ACCOUNT_ID: ${{ secrets.INSTAGRAM_ACCOUNT_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_UPLOAD_PRESET: ${{ secrets.CLOUDINARY_UPLOAD_PRESET }}
+        # For scheduled runs, we use a default location. For manual runs, we use the input.
+        run: node ./scripts/automated-post.js "${{ github.event.inputs.location || 'New York' }}"
+

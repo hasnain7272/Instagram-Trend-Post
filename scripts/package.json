@@ -1,0 +1,12 @@
+{
+  "name": "instatrend-automation-script",
+  "version": "1.0.0",
+  "description": "Script to automatically generate and post to Instagram.",
+  "main": "automated-post.js",
+  "type": "module",
+  "dependencies": {
+    "@google/genai": "^1.21.0",
+    "node-fetch": "^3.3.2",
+    "dotenv": "^16.4.5"
+  }
+}
